@@ -1,2 +1,3 @@
 my_assistant_env/
 ~$*.docx
+.env
