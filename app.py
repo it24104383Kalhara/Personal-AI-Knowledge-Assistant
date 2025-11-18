@@ -1,10 +1,13 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 from werkzeug.utils import secure_filename
 from src.rag_engine import (read_and_chunk_text, find_relevant_chunk, get_ai_answer)
 
 #  application object
 app = Flask(__name__)
+
+# secret key for sessions
+app.secret_key = 'super_secret_key_for_dev_only'        # required to use the 'session' object securely
 
 # Configuration: Tell Flask where to save uploaded files
 UPLOAD_FOLDER = 'uploads'
@@ -29,22 +32,26 @@ def home():
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             uploaded_file.save(file_path)
 
-            print(f"DEBUG: Processing file: {filename}")
+            try: 
+                chunks = read_and_chunk_text(file_path)
+                relevant_chunk = find_relevant_chunk(chunks, user_question)
+                if relevant_chunk:         
+                    answer = get_ai_answer(relevant_chunk, user_question)
+                else:
+                    answer = "I couldn't find relevant information in the document."   
+            except Exception as e:
+                answer = f"Error processing file: {str(e)}"
+        else:
+            answer = "No file uploaded. Please select a .txt file."
 
-        try: 
-            chunks = read_and_chunk_text(file_path)
-            relevant_chunk = find_relevant_chunk(chunks, user_question)
-            if relevant_chunk:         
-                answer = get_ai_answer(relevant_chunk, user_question)
-            else:
-                answer = "I couldn't find relevant information in the document."
-               
-        except Exception as e:
-            answer = f"Error processing file: {str(e)}"
-    else:
-        answer = "No file uploaded. Please select a .txt file."
+        # store answer in a session and redirect
+        session['answer'] = answer
+        return redirect(url_for('home'))
+    
+    # Delete the answer from the session
+    answer = session.pop('answer', None)
+    return render_template('index.html', answer=answer)            
 
-    return render_template('index.html', answer=answer)        # Render the page, passing the answer back to HTML
 
 # Run the app
 if __name__ == '__main__':
