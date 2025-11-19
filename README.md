@@ -1,57 +1,63 @@
-# Personal AI Knowledge Assistant
+# 🤖 Personal AI Knowledge Assistant
 
-This project is a command-line AI assistant that uses Retrieval-Augmented Generation (RAG) to answer questions based on a text document you provide.
+## 🌟 Project Overview
+This project is a sophisticated Retrieval-Augmented Generation (RAG) system built into a modern web application. It allows users to upload custom documents (e.g., meeting notes, research papers, legal briefs) and ask specific, context-aware questions about their content.
 
----
+This project demonstrates proficiency in **Python Backend Development**, **Natural Language Processing (NLP)**, and **Web Application Engineering**.
 
-## 🚀 How to Run
+## 🛠️ Key Technologies & Architecture
+* **Core Backend:** Python 3.13.9
+* **Web Framework:** Flask
+* **AI/NLP:** OpenAI API (GPT-3.5) for text summarization and Q&A.
+* **Vector/Embedding Model:** Used for finding the most relevant chunk of text (RAG).
+* **Web Server (Production):** Gunicorn (Configured for deployment readiness).
+* **Frontend:** HTML5, CSS (Bootstrap 5 for modern UI).
+* **Version Control:** Git/GitHub.
 
-This project requires Python 3.8+ and an OpenAI API key.
+## ✨ Features
+* **Dynamic File Upload:** Users can upload any `.txt` file via the web interface.
+* **Contextual Q&A:** The AI answers questions based *only* on the uploaded document's content.
+* **Modern UX:** Clean, responsive interface built with Bootstrap.
+* **Post-Redirect-Get (PRG) Pattern:** Implemented for reliable form submission and clean page refresh.
 
-### 1. Setup
+## 🚀 How to Run Locally
 
-**Clone the repository:**
-```bash
-git clone [https://github.com/it24104383Kalhara/Personal-AI-Knowledge-Assistant.git](https://github.com/it24104383Kalhara/Personal-AI-Knowledge-Assistant.git)
-cd Personal-AI-Knowledge-Assistant
-```
-**Create a virtual environment:**
-```bash
-python -m venv my_assistant_env
-.\my_assistant_env\Scripts\activate
-```
-**Install required libraries:**
-```bash
-pip install -r requirements.txt
-```
-**Create your environment file:**
-```
-1. Create a file named .env in the root folder.
+### Prerequisites
+1.  Python 3.10+ installed.
+2.  An OpenAI API Key.
 
-2. Add your OpenAI API key to it: OPENAI_API_KEY="sk-..."
-```
-### 2. Run the Tool
-``` 
-python main.py "path/to/your/document.txt" "Your question about the document?"
-```
-**Example:**
-```
-python main.py "sample_text.txt" "What is the currency of Japan?"
-```
-**Example Output:**
-```
---- Running AI Knowledge Assistant ---
-Filepath: sample_text.txt
-User Question: What is the currency of Japan?
+### Setup Steps
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/it24104383Kalhara/Personal-AI-Knowledge-Assistant
+    cd Personal-AI-Knowledge-Assistant
+    ```
+2.  **Create a Virtual Environment:**
+    ```bash
+    python -m venv my_assistant_env
+    source my_assistant_env/bin/activate  # Mac/Linux
+    my_assistant_env\Scripts\activate     # Windows
+    ```
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  **Set Environment Variables:**
+    Create a file named `.env` in the root directory and add your key:
+    ```
+    OPENAI_API_KEY="sk-YOUR_SECRET_KEY_HERE"
+    ```
+5.  **Run the Application:**
+    ```bash
+    python app.py
+    ```
+6.  Open your browser and navigate to **`http://127.0.0.1:8888`**
 
-Loaded 2 chunks from sample_text.txt
+## 🖼️ Application Screenshot
+Asking a question:
 
---- Found Relevant Context ---
-The capital of Japan is Tokyo...
-...The currency of Japan is the Yen.
+![Screenshot of the Assistant when asking a question.](screenshot2.png)
 
---- Sending to AI for Answer ---
+Giving the answer:
 
---- FINAL ANSWER ---
-The currency of Japan is the Yen.
-```
+![Screenshot of the Assistant when giving a answer.](screenshot.png)
